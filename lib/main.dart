@@ -6,7 +6,7 @@ class MyApp extends StatelessWidget {
   MyApp({super.key});
 
   final List<String> mockTasks = const [
-    'Buy groceries',
+    'Find Scrim',
     'Fix emulator bug',
     'Deploy MVP',
     'Review sprint board',
