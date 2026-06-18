@@ -11,6 +11,7 @@ class MyApp extends StatelessWidget {
     'Deploy MVP',
     'Review sprint board',
     'Prep June 23 integration notes',
+    'Meow',
   ];
 
   @override
