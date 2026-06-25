@@ -66,29 +66,56 @@ class _TodoHomePageState extends State<TodoHomePage> {
         child: Column(
           children: [
             Expanded(
-              child: ListView.builder(
-                itemCount: tasks.length,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text(
-                      tasks[index].title,
-                      style: TextStyle(
-                        decoration: tasks[index].isDone
-                            ? TextDecoration.lineThrough
-                            : TextDecoration.none,
+              child: tasks.isEmpty
+                  ? const Center(
+                      child: Text(
+                        'All caught up! Add a task to get started.',
+                        style: TextStyle(fontSize: 18, color: Colors.grey),
+                        textAlign: TextAlign.center,
                       ),
-                    ),
-                    trailing: Checkbox(
-                      value: tasks[index].isDone,
-                      onChanged: (bool? value) {
-                        setState(() {
-                          tasks[index].isDone = value!;
-                        });
+                    )
+                  : ListView.builder(
+                      itemCount: tasks.length,
+                      itemBuilder: (context, index) {
+                        return Dismissible(
+                          key: Key(tasks[index].id),
+                          direction: DismissDirection.endToStart,
+                          background: Container(
+                            color: Colors.red,
+                            alignment: Alignment.centerRight,
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: const Icon(
+                              Icons.delete,
+                              color: Colors.white,
+                            ),
+                          ),
+                          onDismissed: (direction) {
+                            setState(() {
+                              _repository.deleteTask(tasks[index].id);
+                            });
+                          },
+                          child: ListTile(
+                            title: Text(
+                              tasks[index].title,
+                              style: TextStyle(
+                                decoration: tasks[index].isDone
+                                    ? TextDecoration.lineThrough
+                                    : null,
+                                color: tasks[index].isDone ? Colors.grey : null,
+                              ),
+                            ),
+                            trailing: Checkbox(
+                              value: tasks[index].isDone,
+                              onChanged: (bool? value) {
+                                setState(() {
+                                  tasks[index].isDone = value!;
+                                });
+                              },
+                            ),
+                          ),
+                        );
                       },
                     ),
-                  );
-                },
-              ),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 8, 8, 16),
