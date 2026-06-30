@@ -11,6 +11,22 @@ class Task {
   });
 
 
+  Map<String, dynamic> toJson() { // Convert Task object to JSON
+    return {
+      'id': id,
+      'title': title,
+      'isDone': isDone,
+    };
+  }
+
+  factory Task.fromJson(Map<String, dynamic> json) { // Create Task object from JSON
+    return Task(
+      id: json['id'],
+      title: json['title'],
+      isDone: json['isDone'],
+    );
+  }
+
   void toggleDone() {
     isDone = !isDone;
   }
